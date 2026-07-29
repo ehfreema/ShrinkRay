@@ -15,10 +15,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "C547591A0E6A9E732E425E6D"
-               BuildableName = "VidToDiscord.app"
-               BlueprintName = "VidToDiscord"
-               ReferencedContainer = "container:VidToDiscord.xcodeproj">
+               BlueprintIdentifier = "36B59E503EC1199C0E6C81C9"
+               BuildableName = "ShrinkRay.app"
+               BlueprintName = "ShrinkRay"
+               ReferencedContainer = "container:ShrinkRay.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C547591A0E6A9E732E425E6D"
-            BuildableName = "VidToDiscord.app"
-            BlueprintName = "VidToDiscord"
-            ReferencedContainer = "container:VidToDiscord.xcodeproj">
+            BlueprintIdentifier = "36B59E503EC1199C0E6C81C9"
+            BuildableName = "ShrinkRay.app"
+            BlueprintName = "ShrinkRay"
+            ReferencedContainer = "container:ShrinkRay.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <Testables>
@@ -44,10 +44,10 @@
             parallelizable = "NO">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "5CB70FA7F9D69948D814F70A"
-               BuildableName = "VidToDiscordTests.xctest"
-               BlueprintName = "VidToDiscordTests"
-               ReferencedContainer = "container:VidToDiscord.xcodeproj">
+               BlueprintIdentifier = "154F626924A6C6ADFE706339"
+               BuildableName = "ShrinkRayTests.xctest"
+               BlueprintName = "ShrinkRayTests"
+               ReferencedContainer = "container:ShrinkRay.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,10 +68,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C547591A0E6A9E732E425E6D"
-            BuildableName = "VidToDiscord.app"
-            BlueprintName = "VidToDiscord"
-            ReferencedContainer = "container:VidToDiscord.xcodeproj">
+            BlueprintIdentifier = "36B59E503EC1199C0E6C81C9"
+            BuildableName = "ShrinkRay.app"
+            BlueprintName = "ShrinkRay"
+            ReferencedContainer = "container:ShrinkRay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -85,10 +85,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "C547591A0E6A9E732E425E6D"
-            BuildableName = "VidToDiscord.app"
-            BlueprintName = "VidToDiscord"
-            ReferencedContainer = "container:VidToDiscord.xcodeproj">
+            BlueprintIdentifier = "36B59E503EC1199C0E6C81C9"
+            BuildableName = "ShrinkRay.app"
+            BlueprintName = "ShrinkRay"
+            ReferencedContainer = "container:ShrinkRay.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

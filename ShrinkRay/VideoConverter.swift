@@ -51,7 +51,7 @@ enum VideoConverter {
         )
         defer { try? FileManager.default.removeItem(at: stagedOutput) }
         let temporaryDirectory = FileManager.default.temporaryDirectory
-            .appending(path: "VidToDiscord-\(UUID().uuidString)", directoryHint: .isDirectory)
+            .appending(path: "ShrinkRay-\(UUID().uuidString)", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: temporaryDirectory) }
 
@@ -230,7 +230,7 @@ enum VideoConverter {
         process.executableURL = executable
         process.arguments = arguments
         let pipe = Pipe()
-        let logURL = FileManager.default.temporaryDirectory.appending(path: "VidToDiscord-\(UUID().uuidString).log")
+        let logURL = FileManager.default.temporaryDirectory.appending(path: "ShrinkRay-\(UUID().uuidString).log")
         FileManager.default.createFile(atPath: logURL.path, contents: nil)
         defer { try? FileManager.default.removeItem(at: logURL) }
         let log = try FileHandle(forWritingTo: logURL)

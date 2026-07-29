@@ -22,5 +22,6 @@ until that release is published.
 ### Changed
 
 - Standardized the application marketing version as `1.0.0`.
+- Renamed the application and project to ShrinkRay.
 - Replaced the twelve-attempt compression loop with one conservative two-pass encode and at most one measured corrective retry.
 - Staged completed output beside the destination so an existing conversion remains intact until its replacement succeeds.

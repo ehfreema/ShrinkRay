@@ -68,7 +68,7 @@ struct ContentView: View {
                 .foregroundStyle(model.outputURL == nil ? Color.accentColor : .green)
 
             VStack(spacing: 6) {
-                Text("Vid to Discord")
+                Text("ShrinkRay")
                     .font(.title2.weight(.semibold))
                 Text(model.status)
                     .foregroundStyle(.secondary)

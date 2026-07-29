@@ -6,7 +6,7 @@ Until the first public release, security fixes are made only on the current deve
 
 ## Reporting a vulnerability
 
-Use [GitHub private vulnerability reporting](https://github.com/ehfreema/VidToDiscord/security/advisories/new). Do not open a public issue for a suspected vulnerability or include exploit details in a public discussion.
+Use [GitHub private vulnerability reporting](https://github.com/ehfreema/ShrinkRay/security/advisories/new). Do not open a public issue for a suspected vulnerability or include exploit details in a public discussion.
 
 From the repository, select **Security → Advisories → Report a vulnerability** to start a private report visible to the repository maintainers.
 

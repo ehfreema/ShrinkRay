@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct VidToDiscordApp: App {
+struct ShrinkRayApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()

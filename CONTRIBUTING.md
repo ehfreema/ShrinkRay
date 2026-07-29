@@ -3,7 +3,7 @@
 ## Setup
 
 1. Install Xcode 26 or later, Homebrew, FFmpeg, and FFprobe as described in the README.
-2. Open `VidToDiscord.xcodeproj`, or build from the project root with the documented `xcodebuild` command.
+2. Open `ShrinkRay.xcodeproj`, or build from the project root with the documented `xcodebuild` command.
 3. If project settings or target structure change, edit `project.yml` and regenerate the project with XcodeGen. Do not treat manual changes to the generated `.xcodeproj` as the source of truth.
 
 ## Scope and style
@@ -18,8 +18,8 @@
 Before sharing a change, run the automated tests and build the Release configuration:
 
 ```sh
-xcodebuild -project VidToDiscord.xcodeproj -scheme VidToDiscord -configuration Debug -derivedDataPath build test
-xcodebuild -project VidToDiscord.xcodeproj -scheme VidToDiscord -configuration Release -derivedDataPath build build
+xcodebuild -project ShrinkRay.xcodeproj -scheme ShrinkRay -configuration Debug -derivedDataPath build test
+xcodebuild -project ShrinkRay.xcodeproj -scheme ShrinkRay -configuration Release -derivedDataPath build build
 ```
 
 Manually test at least:

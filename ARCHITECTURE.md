@@ -1,14 +1,14 @@
 # Architecture
 
-Vid to Discord is a small SwiftUI macOS application with a single conversion service.
+ShrinkRay is a small SwiftUI macOS application with a single conversion service.
 
 ## Components
 
-- `VidToDiscord/VidToDiscordApp.swift` creates the SwiftUI window.
-- `VidToDiscord/ContentView.swift` contains the view and the main-actor `AppModel`. The model owns file selection, status, errors, and the current input and output URLs.
-- `VidToDiscord/VideoConverter.swift` contains tool discovery, intermediate export, probing, encoding policy, process execution, output sizing, and padding.
+- `ShrinkRay/ShrinkRayApp.swift` creates the SwiftUI window.
+- `ShrinkRay/ContentView.swift` contains the view and the main-actor `AppModel`. The model owns file selection, status, errors, and the current input and output URLs.
+- `ShrinkRay/VideoConverter.swift` contains tool discovery, intermediate export, probing, encoding policy, process execution, output sizing, and padding.
 - `AppIcon.icon` contains the layered Icon Composer source compiled into the application icon by Xcode 26 or later.
-- `project.yml` is the XcodeGen source of truth. `VidToDiscord.xcodeproj` is generated and checked in for convenience.
+- `project.yml` is the XcodeGen source of truth. `ShrinkRay.xcodeproj` is generated and checked in for convenience.
 
 ## Conversion flow
 
@@ -35,7 +35,7 @@ The target, lower padding threshold, and accepted upper limit are decimal byte c
 
 ## Data lifecycle and failure behavior
 
-Each conversion gets a `VidToDiscord-<UUID>` temporary directory for the AVFoundation intermediate and two-pass logs. Every process invocation also gets a temporary command log. Swift `defer` blocks remove these after normal return or a thrown error, but they cannot guarantee cleanup after abnormal process termination.
+Each conversion gets a `ShrinkRay-<UUID>` temporary directory for the AVFoundation intermediate and two-pass logs. Every process invocation also gets a temporary command log. Swift `defer` blocks remove these after normal return or a thrown error, but they cannot guarantee cleanup after abnormal process termination.
 
 The encoded output is staged in the destination directory, padded and validated there, then installed only after success. Existing outputs are replaced with `FileManager.replaceItemAt`; first outputs use a same-directory move. This preserves an earlier output on normal failures and is normally atomic on local filesystems, although network and cloud-synced filesystems can provide weaker semantics. The source directory must be writable.
 

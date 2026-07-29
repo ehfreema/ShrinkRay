@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import Vid_to_Discord
+@testable import ShrinkRay
 
 struct VideoConverterTests {
     @Test func limitsEncodingToOneCorrection() {
@@ -39,7 +39,7 @@ struct VideoConverterTests {
 
     @Test func installingNewOutputMovesStagedFile() throws {
         let directory = FileManager.default.temporaryDirectory
-            .appending(path: "VidToDiscordTests-\(UUID().uuidString)", directoryHint: .isDirectory)
+            .appending(path: "ShrinkRayTests-\(UUID().uuidString)", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -55,7 +55,7 @@ struct VideoConverterTests {
 
     @Test func installingReplacementPreservesUntilPromotion() throws {
         let directory = FileManager.default.temporaryDirectory
-            .appending(path: "VidToDiscordTests-\(UUID().uuidString)", directoryHint: .isDirectory)
+            .appending(path: "ShrinkRayTests-\(UUID().uuidString)", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
 
@@ -80,7 +80,7 @@ struct VideoConverterTests {
         }
 
         let directory = FileManager.default.temporaryDirectory
-            .appending(path: "VidToDiscordTests-\(UUID().uuidString)", directoryHint: .isDirectory)
+            .appending(path: "ShrinkRayTests-\(UUID().uuidString)", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: directory) }
 

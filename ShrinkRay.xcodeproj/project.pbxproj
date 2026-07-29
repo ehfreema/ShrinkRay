@@ -7,193 +7,193 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B538AA6D00D9C309F7CB0C0 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = B2AA669C6DB8D77A0532DFCE /* AppIcon.icon */; };
-		69CC0E84AEAFB4F57EA64C37 /* VideoConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DB7CDA1BF5EFC2A22AEF26 /* VideoConverterTests.swift */; };
-		A10629566C439D02B5EDDCF6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0203CF5C0D349C9DDF5780 /* ContentView.swift */; };
-		C21DC4BAE4CF811CDAEA45D7 /* VideoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA92CB0F3483F4658D771ECC /* VideoConverter.swift */; };
-		EB6670954B68366010E50B0C /* VidToDiscordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFA42F69565BDEB81B43AF1 /* VidToDiscordApp.swift */; };
+		41019DA46CB18A113CA428BC /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9856D7445A291A26C7C7E6D4 /* ContentView.swift */; };
+		815A15FC93E920909962FD51 /* VideoConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2F82A276E55F9412203F7E8B /* VideoConverterTests.swift */; };
+		9C6D228CE9838F08237AA541 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 6EFD74E196CA43976B71DBF4 /* AppIcon.icon */; };
+		C7BE7EDB173FEFFF59326702 /* VideoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4321836EB0BFBE53935DD6C7 /* VideoConverter.swift */; };
+		CA3B453E6B4A92D0E0896EB6 /* ShrinkRayApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1AC8830CDCF7A3B8471D46E /* ShrinkRayApp.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		714927B34284314437AFDD06 /* PBXContainerItemProxy */ = {
+		FC2D05E8D2A6A27D15AF88CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 553CAD80D3DF62987D49B426 /* Project object */;
+			containerPortal = 7425FE08D67BFA1F2CE56A59 /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = C547591A0E6A9E732E425E6D;
-			remoteInfo = VidToDiscord;
+			remoteGlobalIDString = 36B59E503EC1199C0E6C81C9;
+			remoteInfo = ShrinkRay;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A0203CF5C0D349C9DDF5780 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		55DB7CDA1BF5EFC2A22AEF26 /* VideoConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConverterTests.swift; sourceTree = "<group>"; };
-		62139E95C0B53AB5F955907F /* VidToDiscordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VidToDiscordTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		684A46D14CE01BEF7DAC041C /* VidToDiscord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VidToDiscord.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		9CFA42F69565BDEB81B43AF1 /* VidToDiscordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VidToDiscordApp.swift; sourceTree = "<group>"; };
-		AA92CB0F3483F4658D771ECC /* VideoConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConverter.swift; sourceTree = "<group>"; };
-		B2AA669C6DB8D77A0532DFCE /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		2BE1BFFF071F48988CE26E1D /* ShrinkRayTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ShrinkRayTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F82A276E55F9412203F7E8B /* VideoConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConverterTests.swift; sourceTree = "<group>"; };
+		4321836EB0BFBE53935DD6C7 /* VideoConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConverter.swift; sourceTree = "<group>"; };
+		6EFD74E196CA43976B71DBF4 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
+		92C0AEA8F6B27E8488D9BBE2 /* ShrinkRay.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ShrinkRay.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9856D7445A291A26C7C7E6D4 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E1AC8830CDCF7A3B8471D46E /* ShrinkRayApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShrinkRayApp.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
-		0B94D4C2651F4DDAB5B55EF3 /* VidToDiscordTests */ = {
+		2682D06F8FF5AFC5A152AE00 /* ShrinkRay */ = {
 			isa = PBXGroup;
 			children = (
-				55DB7CDA1BF5EFC2A22AEF26 /* VideoConverterTests.swift */,
+				9856D7445A291A26C7C7E6D4 /* ContentView.swift */,
+				E1AC8830CDCF7A3B8471D46E /* ShrinkRayApp.swift */,
+				4321836EB0BFBE53935DD6C7 /* VideoConverter.swift */,
 			);
-			path = VidToDiscordTests;
+			path = ShrinkRay;
 			sourceTree = "<group>";
 		};
-		461C5B3704643F372DBAE021 /* VidToDiscord */ = {
+		2B4DE911045B6A0A4FE2F4D4 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0A0203CF5C0D349C9DDF5780 /* ContentView.swift */,
-				AA92CB0F3483F4658D771ECC /* VideoConverter.swift */,
-				9CFA42F69565BDEB81B43AF1 /* VidToDiscordApp.swift */,
-			);
-			path = VidToDiscord;
-			sourceTree = "<group>";
-		};
-		6FCFE254AC2F816BDA09435C = {
-			isa = PBXGroup;
-			children = (
-				B2AA669C6DB8D77A0532DFCE /* AppIcon.icon */,
-				461C5B3704643F372DBAE021 /* VidToDiscord */,
-				0B94D4C2651F4DDAB5B55EF3 /* VidToDiscordTests */,
-				A2F966469495598D222BD28E /* Products */,
-			);
-			sourceTree = "<group>";
-		};
-		A2F966469495598D222BD28E /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				684A46D14CE01BEF7DAC041C /* VidToDiscord.app */,
-				62139E95C0B53AB5F955907F /* VidToDiscordTests.xctest */,
+				92C0AEA8F6B27E8488D9BBE2 /* ShrinkRay.app */,
+				2BE1BFFF071F48988CE26E1D /* ShrinkRayTests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6B80B351FBA0996D0246293F = {
+			isa = PBXGroup;
+			children = (
+				6EFD74E196CA43976B71DBF4 /* AppIcon.icon */,
+				2682D06F8FF5AFC5A152AE00 /* ShrinkRay */,
+				EDA3950588B916C025F1CA47 /* ShrinkRayTests */,
+				2B4DE911045B6A0A4FE2F4D4 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EDA3950588B916C025F1CA47 /* ShrinkRayTests */ = {
+			isa = PBXGroup;
+			children = (
+				2F82A276E55F9412203F7E8B /* VideoConverterTests.swift */,
+			);
+			path = ShrinkRayTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		5CB70FA7F9D69948D814F70A /* VidToDiscordTests */ = {
+		154F626924A6C6ADFE706339 /* ShrinkRayTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 379BDD88AE7414202AF997B4 /* Build configuration list for PBXNativeTarget "VidToDiscordTests" */;
+			buildConfigurationList = AB60579C02FCA918D6C09D8F /* Build configuration list for PBXNativeTarget "ShrinkRayTests" */;
 			buildPhases = (
-				C7B109211731A459CF471443 /* Sources */,
+				E60D8E6C6155D752CDD704B8 /* Sources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				AF83C43DC93B07A97E62ACCB /* PBXTargetDependency */,
+				1B0B7398FA35E6A77DE3BDEA /* PBXTargetDependency */,
 			);
-			name = VidToDiscordTests;
+			name = ShrinkRayTests;
 			packageProductDependencies = (
 			);
-			productName = VidToDiscordTests;
-			productReference = 62139E95C0B53AB5F955907F /* VidToDiscordTests.xctest */;
+			productName = ShrinkRayTests;
+			productReference = 2BE1BFFF071F48988CE26E1D /* ShrinkRayTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		C547591A0E6A9E732E425E6D /* VidToDiscord */ = {
+		36B59E503EC1199C0E6C81C9 /* ShrinkRay */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 9B2D3CE0639CB6ECB4A3B964 /* Build configuration list for PBXNativeTarget "VidToDiscord" */;
+			buildConfigurationList = DD52E5C04F773A2B79C8A60C /* Build configuration list for PBXNativeTarget "ShrinkRay" */;
 			buildPhases = (
-				A905A08243BA9D156C2705A1 /* Sources */,
-				8FE2B8373151601EFA130AD1 /* Resources */,
+				59BD7295762D614622862A87 /* Sources */,
+				554E7047168246FD0AA66520 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = VidToDiscord;
+			name = ShrinkRay;
 			packageProductDependencies = (
 			);
-			productName = VidToDiscord;
-			productReference = 684A46D14CE01BEF7DAC041C /* VidToDiscord.app */;
+			productName = ShrinkRay;
+			productReference = 92C0AEA8F6B27E8488D9BBE2 /* ShrinkRay.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
-		553CAD80D3DF62987D49B426 /* Project object */ = {
+		7425FE08D67BFA1F2CE56A59 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
-					C547591A0E6A9E732E425E6D = {
+					36B59E503EC1199C0E6C81C9 = {
 						ProvisioningStyle = Automatic;
 					};
 				};
 			};
-			buildConfigurationList = 110BD813196BEE16C71F5DA8 /* Build configuration list for PBXProject "VidToDiscord" */;
+			buildConfigurationList = 09CCD3BD62FCE1FB430F2882 /* Build configuration list for PBXProject "ShrinkRay" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				Base,
 				en,
 			);
-			mainGroup = 6FCFE254AC2F816BDA09435C;
+			mainGroup = 6B80B351FBA0996D0246293F;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = A2F966469495598D222BD28E /* Products */;
+			productRefGroup = 2B4DE911045B6A0A4FE2F4D4 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				C547591A0E6A9E732E425E6D /* VidToDiscord */,
-				5CB70FA7F9D69948D814F70A /* VidToDiscordTests */,
+				36B59E503EC1199C0E6C81C9 /* ShrinkRay */,
+				154F626924A6C6ADFE706339 /* ShrinkRayTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		8FE2B8373151601EFA130AD1 /* Resources */ = {
+		554E7047168246FD0AA66520 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B538AA6D00D9C309F7CB0C0 /* AppIcon.icon in Resources */,
+				9C6D228CE9838F08237AA541 /* AppIcon.icon in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		A905A08243BA9D156C2705A1 /* Sources */ = {
+		59BD7295762D614622862A87 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A10629566C439D02B5EDDCF6 /* ContentView.swift in Sources */,
-				EB6670954B68366010E50B0C /* VidToDiscordApp.swift in Sources */,
-				C21DC4BAE4CF811CDAEA45D7 /* VideoConverter.swift in Sources */,
+				41019DA46CB18A113CA428BC /* ContentView.swift in Sources */,
+				CA3B453E6B4A92D0E0896EB6 /* ShrinkRayApp.swift in Sources */,
+				C7BE7EDB173FEFFF59326702 /* VideoConverter.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C7B109211731A459CF471443 /* Sources */ = {
+		E60D8E6C6155D752CDD704B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69CC0E84AEAFB4F57EA64C37 /* VideoConverterTests.swift in Sources */,
+				815A15FC93E920909962FD51 /* VideoConverterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		AF83C43DC93B07A97E62ACCB /* PBXTargetDependency */ = {
+		1B0B7398FA35E6A77DE3BDEA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = C547591A0E6A9E732E425E6D /* VidToDiscord */;
-			targetProxy = 714927B34284314437AFDD06 /* PBXContainerItemProxy */;
+			target = 36B59E503EC1199C0E6C81C9 /* ShrinkRay */;
+			targetProxy = FC2D05E8D2A6A27D15AF88CF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0724FD80AD6802E8243AB3D1 /* Release */ = {
+		33558150E9DFAB48404EC348 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				ENABLE_APP_SANDBOX = NO;
-				INFOPLIST_KEY_CFBundleDisplayName = "Vid to Discord";
+				INFOPLIST_KEY_CFBundleDisplayName = ShrinkRay;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Ethan Freeman";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -201,13 +201,13 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.local.VidToDiscord;
-				PRODUCT_MODULE_NAME = Vid_to_Discord;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.ShrinkRay;
+				PRODUCT_MODULE_NAME = ShrinkRay;
 				SDKROOT = macosx;
 			};
 			name = Release;
 		};
-		10165737ACB4A806CF5576BA /* Debug */ = {
+		3D50617590DB4DF638CB2D0C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -217,33 +217,15 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/../Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.local.VidToDiscordTests;
-				PRODUCT_MODULE_NAME = VidToDiscordTests;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.ShrinkRayTests;
+				PRODUCT_MODULE_NAME = ShrinkRayTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = macosx;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vid to Discord.app/Contents/MacOS/Vid to Discord";
-			};
-			name = Debug;
-		};
-		34E2AF9C4A4B6C4A6D2467EA /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				COMBINE_HIDPI_IMAGES = YES;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@loader_path/../Frameworks",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.local.VidToDiscordTests;
-				PRODUCT_MODULE_NAME = VidToDiscordTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = macosx;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vid to Discord.app/Contents/MacOS/Vid to Discord";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShrinkRay.app/Contents/MacOS/ShrinkRay";
 			};
 			name = Release;
 		};
-		578F4094EE9E9E5CA5A3B490 /* Release */ = {
+		5406789E8AA5004227CE41A3 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -294,7 +276,7 @@
 				MARKETING_VERSION = 1.0.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "Vid to Discord";
+				PRODUCT_NAME = ShrinkRay;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
@@ -302,28 +284,7 @@
 			};
 			name = Release;
 		};
-		79A191366715DDDB2F1A70AA /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_STYLE = Automatic;
-				COMBINE_HIDPI_IMAGES = YES;
-				ENABLE_APP_SANDBOX = NO;
-				INFOPLIST_KEY_CFBundleDisplayName = "Vid to Discord";
-				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
-				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Ethan Freeman";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.local.VidToDiscord;
-				PRODUCT_MODULE_NAME = Vid_to_Discord;
-				SDKROOT = macosx;
-			};
-			name = Debug;
-		};
-		94FF763C969895085B5243CA /* Debug */ = {
+		789D66D72BB05E56C20B56E3 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -381,7 +342,7 @@
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_NAME = "Vid to Discord";
+				PRODUCT_NAME = ShrinkRay;
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -389,37 +350,76 @@
 			};
 			name = Debug;
 		};
+		B3AAEBD8B8B23E55EFA1C2C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.ShrinkRayTests;
+				PRODUCT_MODULE_NAME = ShrinkRayTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/ShrinkRay.app/Contents/MacOS/ShrinkRay";
+			};
+			name = Debug;
+		};
+		CB0DA3803F60CB726396F16D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				ENABLE_APP_SANDBOX = NO;
+				INFOPLIST_KEY_CFBundleDisplayName = ShrinkRay;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.video";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "Copyright © 2026 Ethan Freeman";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.ShrinkRay;
+				PRODUCT_MODULE_NAME = ShrinkRay;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		110BD813196BEE16C71F5DA8 /* Build configuration list for PBXProject "VidToDiscord" */ = {
+		09CCD3BD62FCE1FB430F2882 /* Build configuration list for PBXProject "ShrinkRay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				94FF763C969895085B5243CA /* Debug */,
-				578F4094EE9E9E5CA5A3B490 /* Release */,
+				789D66D72BB05E56C20B56E3 /* Debug */,
+				5406789E8AA5004227CE41A3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		379BDD88AE7414202AF997B4 /* Build configuration list for PBXNativeTarget "VidToDiscordTests" */ = {
+		AB60579C02FCA918D6C09D8F /* Build configuration list for PBXNativeTarget "ShrinkRayTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				10165737ACB4A806CF5576BA /* Debug */,
-				34E2AF9C4A4B6C4A6D2467EA /* Release */,
+				B3AAEBD8B8B23E55EFA1C2C6 /* Debug */,
+				3D50617590DB4DF638CB2D0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		9B2D3CE0639CB6ECB4A3B964 /* Build configuration list for PBXNativeTarget "VidToDiscord" */ = {
+		DD52E5C04F773A2B79C8A60C /* Build configuration list for PBXNativeTarget "ShrinkRay" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				79A191366715DDDB2F1A70AA /* Debug */,
-				0724FD80AD6802E8243AB3D1 /* Release */,
+				CB0DA3803F60CB726396F16D /* Debug */,
+				33558150E9DFAB48404EC348 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
 	};
-	rootObject = 553CAD80D3DF62987D49B426 /* Project object */;
+	rootObject = 7425FE08D67BFA1F2CE56A59 /* Project object */;
 }

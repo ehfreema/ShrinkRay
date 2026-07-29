@@ -1,4 +1,4 @@
-# Vid to Discord
+# ShrinkRay
 
 A small native macOS app that converts one local movie at a time into a Discord-sized MP4. It uses AVFoundation for an intermediate MP4 export and FFmpeg for two-pass H.264 encoding, reducing bitrate, resolution, frame rate, or audio quality when necessary.
 
@@ -35,30 +35,30 @@ The first two entries support systems that already have an `ffmpeg-full` formula
 
 ## Build and run
 
-Run these commands from the project root—the directory containing `project.yml` and `VidToDiscord.xcodeproj`.
+Run these commands from the project root—the directory containing `project.yml` and `ShrinkRay.xcodeproj`.
 
 Open the checked-in Xcode project:
 
 ```sh
-open VidToDiscord.xcodeproj
+open ShrinkRay.xcodeproj
 ```
 
-Select the **VidToDiscord** scheme, then build and run it from Xcode.
+Select the **ShrinkRay** scheme, then build and run it from Xcode.
 
 For a command-line Debug build:
 
 ```sh
 xcodebuild \
-  -project VidToDiscord.xcodeproj \
-  -scheme VidToDiscord \
+  -project ShrinkRay.xcodeproj \
+  -scheme ShrinkRay \
   -configuration Debug \
   -derivedDataPath build \
   build
 
-open "build/Build/Products/Debug/Vid to Discord.app"
+open "build/Build/Products/Debug/ShrinkRay.app"
 ```
 
-For a local Release build, change both occurrences of `Debug` to `Release`. The project does not include distribution signing, archiving, notarization, or packaging automation. Before distributing the app, configure an Apple development team and distribution settings in Xcode and replace the local-only `com.local.VidToDiscord` bundle identifier with one controlled by that team.
+For a local Release build, change both occurrences of `Debug` to `Release`. The project does not include distribution signing, archiving, notarization, or packaging automation. Before distributing the app, configure an Apple development team and distribution settings in Xcode and replace the local-only `com.local.ShrinkRay` bundle identifier with one controlled by that team.
 
 ### Regenerating the Xcode project
 
@@ -165,15 +165,15 @@ The app makes one initial two-pass encode and at most one size-corrected retry. 
 - [Changelog](CHANGELOG.md)
 - [Code of Conduct](CODE_OF_CONDUCT.md)
 - [Security policy](SECURITY.md)
-- App entry point: `VidToDiscord/VidToDiscordApp.swift`
-- UI and app state: `VidToDiscord/ContentView.swift`
-- Conversion pipeline: `VidToDiscord/VideoConverter.swift`
+- App entry point: `ShrinkRay/ShrinkRayApp.swift`
+- UI and app state: `ShrinkRay/ContentView.swift`
+- Conversion pipeline: `ShrinkRay/VideoConverter.swift`
 - Project configuration: `project.yml`
 
-The `VidToDiscordTests` target covers bitrate planning, retry bounds, staged output installation, and an end-to-end synthetic conversion when Homebrew FFmpeg is installed. Run it with:
+The `ShrinkRayTests` target covers bitrate planning, retry bounds, staged output installation, and an end-to-end synthetic conversion when Homebrew FFmpeg is installed. Run it with:
 
 ```sh
-xcodebuild -project VidToDiscord.xcodeproj -scheme VidToDiscord -configuration Debug -derivedDataPath build test
+xcodebuild -project ShrinkRay.xcodeproj -scheme ShrinkRay -configuration Debug -derivedDataPath build test
 ```
 
 ## Releases
