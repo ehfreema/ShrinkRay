@@ -72,11 +72,11 @@ Conversion uses a slow two-pass encode and shows stages rather than percentage p
 - `yuv420p`, BT.709 color metadata, and fast-start playback
 - Named `<source-name>-discord.mp4`
 - Written beside the source
-- Maximum accepted size: **7,900,000 bytes**
+- Maximum accepted size: **7.9 MB**
 
-ShrinkRay targets **7,700,000 bytes** to leave room for container overhead. If the first result is too large, it makes at most one measured retry at a lower bitrate. Resolution, frame rate, and audio quality are selected from the available bitrate; very long videos may become extremely low quality and lose audio.
+ShrinkRay targets **7.7 MB** to leave room for container overhead. If the first result is too large, it makes at most one measured retry at a lower bitrate. Resolution, frame rate, and audio quality are selected from the available bitrate; very long videos may become extremely low quality and lose audio.
 
-Outputs below **7,800,000 bytes** are normally padded to **7,850,000 bytes** with an MP4 `free` atom. Padding adds no media or quality.
+Outputs below **7.8 MB** are normally padded to **7.85 MB** with an MP4 `free` atom. Padding adds no media or quality.
 
 ### Existing outputs
 
