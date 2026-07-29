@@ -1,5 +1,9 @@
 # ShrinkRay
 
+<p align="center">
+  <img src="docs/AppIcon.png" width="192" alt="ShrinkRay app icon">
+</p>
+
 A small native macOS app that converts one local movie at a time into a Discord-sized MP4. It uses AVFoundation for an intermediate MP4 export and FFmpeg for two-pass H.264 encoding, reducing bitrate, resolution, frame rate, or audio quality when necessary.
 
 Conversion happens locally. The app does not upload the source or output video.
