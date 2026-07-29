@@ -91,15 +91,15 @@ Conversion uses an indeterminate spinner and status messages rather than percent
 - **Target size:** 7,850,000 bytes
 - **Accepted maximum:** 7,900,000 bytes
 
-The app performs up to 12 encoding attempts. It initially chooses settings from the clip duration, then reduces bitrate and may reduce audio quality, resolution, or frame rate if an output is too large. At very low bitrates audio is removed. Last-resort profiles can be as small as 32 pixels on the longest edge and one frame every 60 seconds; a technically successful result may therefore be unsuitable. Trimming the source is usually better than relying on these extreme fallbacks.
+The app normally performs one two-pass encode. It aims for 7,700,000 bytes to leave room for MP4 overhead and encoder variance. If that result still exceeds 7,900,000 bytes, it measures the actual size and allows one corrected two-pass retry at a proportionally lower bitrate. Audio, resolution, and frame rate are selected from the calculated bitrate before each encode rather than degraded through a long retry loop. At very low bitrates audio is removed.
 
-For sources around 62 minutes or longer, the initial bitrate estimate reaches its 1 kb/s floor. Such a conversion starts at approximately 96 pixels on the longest edge and 1 fps with no audio, before later attempts reduce quality further. Trim long sources before conversion if watchable output matters.
+For sources around 60 minutes or longer, the initial bitrate estimate reaches its 1 kb/s floor. Such a conversion uses approximately 96 pixels on the longest edge and 1 fps with no audio. If an output at that floor is still oversized, the app fails immediately rather than repeating an identical encode. Trim long sources before conversion if watchable output matters.
 
 Outputs smaller than 7,800,000 bytes are normally padded to 7,850,000 bytes by appending a valid MP4 `free` atom. Padding does not add media or improve quality; it makes output size predictable.
 
-### Existing output warning
+### Existing output safety
 
-The output path is not replaced atomically. Before each attempt, the app deletes any existing `<original-name>-discord.mp4`, including a result from an earlier run. If the new conversion fails, the previous output is not restored. Rename or move an output you want to keep before converting the same source again.
+Encoding and padding occur in a uniquely named hidden staging file beside the destination. An existing `<original-name>-discord.mp4` remains untouched until a new result succeeds and passes the size check. The app then replaces the old output in one filesystem replacement operation when the destination already exists, or moves the staged file into place on the first conversion. Local filesystems normally make this final same-directory operation atomic; network and cloud-synced filesystems may provide weaker guarantees.
 
 ### Intermediate export
 
@@ -112,9 +112,10 @@ The source directory must be writable. Network, cloud-synced, removable, or read
 All processing is local. During conversion, the app creates:
 
 - a unique temporary directory containing the complete AVFoundation intermediate and FFmpeg two-pass logs; and
-- a separate temporary command log for each FFmpeg or FFprobe process.
+- a separate temporary command log for each FFmpeg or FFprobe process; and
+- a uniquely named hidden staging MP4 beside the final destination.
 
-These files are deleted after the relevant operation returns normally, whether it succeeds or throws. A crash, force-quit, power loss, or other abnormal termination can bypass cleanup and leave intermediates or logs in the macOS temporary directory. macOS may eventually purge that directory, but the app does not clean up artifacts from earlier interrupted runs.
+These files are deleted after the relevant operation returns normally, whether it succeeds or throws. A crash, force-quit, power loss, or other abnormal termination can bypass cleanup and leave intermediates or logs in the macOS temporary directory or a hidden `.part.mp4` beside the source. macOS may eventually purge its temporary directory, but the app does not clean up artifacts from earlier interrupted runs.
 
 There is no explicit process cancellation. If conversion is interrupted, the current FFmpeg process is not programmatically terminated by the conversion task.
 
@@ -151,11 +152,11 @@ The app reports stages but not percentage progress, and two-pass `slow` encoding
 
 ### No output appears
 
-Look beside the source for a file ending in `-discord.mp4`, or use **Show in Finder** after a successful conversion. A failed conversion can remove a previous output with that name; see [Existing output warning](#existing-output-warning).
+Look beside the source for a file ending in `-discord.mp4`, or use **Show in Finder** after a successful conversion. A failed conversion preserves a previous output with that name; see [Existing output safety](#existing-output-safety).
 
 ### The output is still too large or too low quality
 
-The app makes up to 12 attempts, but extremely long or complex videos may not fit under 7,900,000 bytes. Extreme fallback profiles can also produce impractically low resolution or frame rate. Trim the source and try again.
+The app makes one initial two-pass encode and at most one size-corrected retry. Extremely long or complex videos can still fail to fit under 7,900,000 bytes, while low calculated bitrates can produce impractically low resolution or frame rate. Trim the source and try again.
 
 ## Development
 
@@ -169,7 +170,11 @@ The app makes up to 12 attempts, but extremely long or complex videos may not fi
 - Conversion pipeline: `VidToDiscord/VideoConverter.swift`
 - Project configuration: `project.yml`
 
-There is currently no automated test target.
+The `VidToDiscordTests` target covers bitrate planning, retry bounds, staged output installation, and an end-to-end synthetic conversion when Homebrew FFmpeg is installed. Run it with:
+
+```sh
+xcodebuild -project VidToDiscord.xcodeproj -scheme VidToDiscord -configuration Debug -derivedDataPath build test
+```
 
 ## Releases
 

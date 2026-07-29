@@ -19,9 +19,32 @@ targets:
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.local.VidToDiscord
+        PRODUCT_MODULE_NAME: Vid_to_Discord
         CODE_SIGN_STYLE: Automatic
         ENABLE_APP_SANDBOX: NO
         INFOPLIST_KEY_CFBundleDisplayName: "Vid to Discord"
         INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.video
         INFOPLIST_KEY_NSHumanReadableCopyright: "Copyright © 2026 Ethan Freeman"
         MACOSX_DEPLOYMENT_TARGET: "15.0"
+  VidToDiscordTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - VidToDiscordTests
+    dependencies:
+      - target: VidToDiscord
+    settings:
+      base:
+        PRODUCT_NAME: "$(TARGET_NAME)"
+        PRODUCT_MODULE_NAME: VidToDiscordTests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/Vid to Discord.app/Contents/MacOS/Vid to Discord"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+schemes:
+  VidToDiscord:
+    shared: true
+    build:
+      targets:
+        VidToDiscord: all
+    test:
+      targets:
+        - VidToDiscordTests

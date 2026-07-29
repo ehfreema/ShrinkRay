@@ -7,19 +7,40 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		69CC0E84AEAFB4F57EA64C37 /* VideoConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DB7CDA1BF5EFC2A22AEF26 /* VideoConverterTests.swift */; };
 		A10629566C439D02B5EDDCF6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0203CF5C0D349C9DDF5780 /* ContentView.swift */; };
 		C21DC4BAE4CF811CDAEA45D7 /* VideoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA92CB0F3483F4658D771ECC /* VideoConverter.swift */; };
 		EB6670954B68366010E50B0C /* VidToDiscordApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFA42F69565BDEB81B43AF1 /* VidToDiscordApp.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		714927B34284314437AFDD06 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 553CAD80D3DF62987D49B426 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = C547591A0E6A9E732E425E6D;
+			remoteInfo = VidToDiscord;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		0A0203CF5C0D349C9DDF5780 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		55DB7CDA1BF5EFC2A22AEF26 /* VideoConverterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConverterTests.swift; sourceTree = "<group>"; };
+		62139E95C0B53AB5F955907F /* VidToDiscordTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VidToDiscordTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		684A46D14CE01BEF7DAC041C /* VidToDiscord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VidToDiscord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CFA42F69565BDEB81B43AF1 /* VidToDiscordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VidToDiscordApp.swift; sourceTree = "<group>"; };
 		AA92CB0F3483F4658D771ECC /* VideoConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConverter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
+		0B94D4C2651F4DDAB5B55EF3 /* VidToDiscordTests */ = {
+			isa = PBXGroup;
+			children = (
+				55DB7CDA1BF5EFC2A22AEF26 /* VideoConverterTests.swift */,
+			);
+			path = VidToDiscordTests;
+			sourceTree = "<group>";
+		};
 		461C5B3704643F372DBAE021 /* VidToDiscord */ = {
 			isa = PBXGroup;
 			children = (
@@ -34,6 +55,7 @@
 			isa = PBXGroup;
 			children = (
 				461C5B3704643F372DBAE021 /* VidToDiscord */,
+				0B94D4C2651F4DDAB5B55EF3 /* VidToDiscordTests */,
 				A2F966469495598D222BD28E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -42,6 +64,7 @@
 			isa = PBXGroup;
 			children = (
 				684A46D14CE01BEF7DAC041C /* VidToDiscord.app */,
+				62139E95C0B53AB5F955907F /* VidToDiscordTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -49,6 +72,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		5CB70FA7F9D69948D814F70A /* VidToDiscordTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 379BDD88AE7414202AF997B4 /* Build configuration list for PBXNativeTarget "VidToDiscordTests" */;
+			buildPhases = (
+				C7B109211731A459CF471443 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AF83C43DC93B07A97E62ACCB /* PBXTargetDependency */,
+			);
+			name = VidToDiscordTests;
+			packageProductDependencies = (
+			);
+			productName = VidToDiscordTests;
+			productReference = 62139E95C0B53AB5F955907F /* VidToDiscordTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		C547591A0E6A9E732E425E6D /* VidToDiscord */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 9B2D3CE0639CB6ECB4A3B964 /* Build configuration list for PBXNativeTarget "VidToDiscord" */;
@@ -95,6 +136,7 @@
 			projectRoot = "";
 			targets = (
 				C547591A0E6A9E732E425E6D /* VidToDiscord */,
+				5CB70FA7F9D69948D814F70A /* VidToDiscordTests */,
 			);
 		};
 /* End PBXProject section */
@@ -110,7 +152,23 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		C7B109211731A459CF471443 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69CC0E84AEAFB4F57EA64C37 /* VideoConverterTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AF83C43DC93B07A97E62ACCB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = C547591A0E6A9E732E425E6D /* VidToDiscord */;
+			targetProxy = 714927B34284314437AFDD06 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		0724FD80AD6802E8243AB3D1 /* Release */ = {
@@ -129,7 +187,44 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.local.VidToDiscord;
+				PRODUCT_MODULE_NAME = Vid_to_Discord;
 				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		10165737ACB4A806CF5576BA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.VidToDiscordTests;
+				PRODUCT_MODULE_NAME = VidToDiscordTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vid to Discord.app/Contents/MacOS/Vid to Discord";
+			};
+			name = Debug;
+		};
+		34E2AF9C4A4B6C4A6D2467EA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COMBINE_HIDPI_IMAGES = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@loader_path/../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.local.VidToDiscordTests;
+				PRODUCT_MODULE_NAME = VidToDiscordTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Vid to Discord.app/Contents/MacOS/Vid to Discord";
 			};
 			name = Release;
 		};
@@ -208,6 +303,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 15.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.local.VidToDiscord;
+				PRODUCT_MODULE_NAME = Vid_to_Discord;
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -286,6 +382,15 @@
 			buildConfigurations = (
 				94FF763C969895085B5243CA /* Debug */,
 				578F4094EE9E9E5CA5A3B490 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		379BDD88AE7414202AF997B4 /* Build configuration list for PBXNativeTarget "VidToDiscordTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10165737ACB4A806CF5576BA /* Debug */,
+				34E2AF9C4A4B6C4A6D2467EA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

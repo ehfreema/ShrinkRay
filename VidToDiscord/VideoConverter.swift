@@ -25,7 +25,11 @@ enum VideoConverter {
     private static let lowBytes: Int64 = 7_800_000
     private static let highBytes: Int64 = 7_900_000
     private static let targetBytes: Int64 = 7_850_000
-    private struct EncodingPlan {
+    private static let encodingTargetBytes: Int64 = 7_700_000
+    private static let minimumOutputBytes: Int64 = 1_024
+    static let maxEncodingAttempts = 2
+
+    struct EncodingPlan {
         let totalBitrate: Int
         let videoBitrate: Int
         let audioBitrate: Int
@@ -42,6 +46,10 @@ enum VideoConverter {
         let output = input.deletingLastPathComponent().appending(
             path: "\(input.deletingPathExtension().lastPathComponent)-discord.mp4"
         )
+        let stagedOutput = input.deletingLastPathComponent().appending(
+            path: ".\(input.deletingPathExtension().lastPathComponent)-discord-\(UUID().uuidString).part.mp4"
+        )
+        defer { try? FileManager.default.removeItem(at: stagedOutput) }
         let temporaryDirectory = FileManager.default.temporaryDirectory
             .appending(path: "VidToDiscord-\(UUID().uuidString)", directoryHint: .isDirectory)
         try FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
@@ -53,43 +61,58 @@ enum VideoConverter {
 
         status("Reading video details...")
         let info = try probe(ffprobe: ffprobe, input: sdrInput)
-        // Start from the bitrate that should fill the target. If that is not enough
-        // for normal quality, progressively trade audio, resolution, and frame rate
-        // instead of rejecting the clip or getting stuck at a bitrate floor.
-        var totalBitrate = max(1_000, Int(Double(targetBytes * 8) / info.duration) - 16_000)
+        // Aim below the hard limit so the first two-pass encode normally fits.
+        // The reserve covers muxing and rate-control variance; one measured
+        // correction is available for unusual files.
+        var totalBitrate = initialTotalBitrate(duration: info.duration)
 
-        let passlog = temporaryDirectory.appending(path: "pass").path
         var size: Int64 = 0
-        for attempt in 1...12 {
+        for attempt in 1...maxEncodingAttempts {
             let plan = encodingPlan(
                 totalBitrate: totalBitrate,
-                hasAudio: info.hasAudio,
-                attempt: attempt
+                hasAudio: info.hasAudio
             )
-            status(attempt == 1 ? "Encoding for Discord..." : "Compressing further (attempt \(attempt))...")
-            try? FileManager.default.removeItem(at: output)
+            let passlog = temporaryDirectory.appending(path: "pass-\(attempt)").path
+            status(attempt == 1 ? "Encoding for Discord..." : "Fine-tuning the file size...")
+            try? FileManager.default.removeItem(at: stagedOutput)
             try encode(
                 ffmpeg: ffmpeg,
                 input: sdrInput,
-                output: output,
+                output: stagedOutput,
                 passlog: passlog,
                 plan: plan
             )
-            size = try output.resourceValues(forKeys: [.fileSizeKey]).fileSize.map(Int64.init) ?? 0
+            size = try stagedOutput.resourceValues(forKeys: [.fileSizeKey]).fileSize.map(Int64.init) ?? 0
+            guard size >= minimumOutputBytes else {
+                throw ConversionError.commandFailed("FFmpeg produced an invalid empty output.")
+            }
             if size <= highBytes { break }
 
-            let corrected = Int(Double(plan.totalBitrate) * Double(targetBytes) / Double(size) * 0.95)
-            totalBitrate = max(1_000, min(plan.totalBitrate - 1, corrected))
+            let corrected = correctedTotalBitrate(current: plan.totalBitrate, fileSize: size)
+            guard corrected < plan.totalBitrate else {
+                throw ConversionError.outputTooLarge
+            }
+            totalBitrate = corrected
         }
 
         guard size <= highBytes else {
-            try? FileManager.default.removeItem(at: output)
             throw ConversionError.outputTooLarge
         }
         if size < lowBytes {
-            try pad(output: output, byteCount: targetBytes - size)
+            try pad(output: stagedOutput, byteCount: targetBytes - size)
         }
+        try install(stagedOutput: stagedOutput, at: output)
         return output
+    }
+
+    static func initialTotalBitrate(duration: Double) -> Int {
+        max(1_000, Int(Double(encodingTargetBytes * 8) / duration) - 16_000)
+    }
+
+    static func correctedTotalBitrate(current: Int, fileSize: Int64) -> Int {
+        guard fileSize > 0 else { return current }
+        let corrected = Int(Double(current) * Double(encodingTargetBytes) / Double(fileSize) * 0.95)
+        return max(1_000, min(current - 1, corrected))
     }
 
     private static func toneMap(input: URL, output: URL) async throws {
@@ -162,7 +185,7 @@ enum VideoConverter {
         try run(ffmpeg, secondPass)
     }
 
-    private static func encodingPlan(totalBitrate: Int, hasAudio: Bool, attempt: Int) -> EncodingPlan {
+    static func encodingPlan(totalBitrate: Int, hasAudio: Bool) -> EncodingPlan {
         let audioBitrate: Int
         if !hasAudio || totalBitrate < 48_000 {
             audioBitrate = 0
@@ -192,17 +215,6 @@ enum VideoConverter {
         default: quality = (64, "1/5")
         }
 
-        // Container and per-frame overhead can dominate at extremely low rates.
-        // These last-resort profiles keep reducing that overhead rather than
-        // repeating the same encode and eventually giving up.
-        switch attempt {
-        case 12...: quality = (min(quality.dimension, 32), "1/60")
-        case 10...: quality = (min(quality.dimension, 64), "1/10")
-        case 8...: quality = (min(quality.dimension, 96), "1")
-        case 6...: quality = (min(quality.dimension, 256), "10")
-        default: break
-        }
-
         return EncodingPlan(
             totalBitrate: totalBitrate,
             videoBitrate: videoBitrate,
@@ -220,11 +232,9 @@ enum VideoConverter {
         let pipe = Pipe()
         let logURL = FileManager.default.temporaryDirectory.appending(path: "VidToDiscord-\(UUID().uuidString).log")
         FileManager.default.createFile(atPath: logURL.path, contents: nil)
+        defer { try? FileManager.default.removeItem(at: logURL) }
         let log = try FileHandle(forWritingTo: logURL)
-        defer {
-            try? log.close()
-            try? FileManager.default.removeItem(at: logURL)
-        }
+        defer { try? log.close() }
         process.standardOutput = captureOutput ? pipe : log
         process.standardError = log
         try process.run()
@@ -245,6 +255,21 @@ enum VideoConverter {
         var atomSize = UInt32(byteCount).bigEndian
         try withUnsafeBytes(of: &atomSize) { try handle.write(contentsOf: $0) }
         try handle.write(contentsOf: Data("free".utf8))
-        try handle.write(contentsOf: Data(count: Int(byteCount - 8)))
+        let zeroes = Data(count: 256 * 1_024)
+        var remaining = byteCount - 8
+        while remaining > 0 {
+            let count = min(Int64(zeroes.count), remaining)
+            try handle.write(contentsOf: zeroes.prefix(Int(count)))
+            remaining -= count
+        }
+    }
+
+    static func install(stagedOutput: URL, at output: URL) throws {
+        let fileManager = FileManager.default
+        if fileManager.fileExists(atPath: output.path) {
+            _ = try fileManager.replaceItemAt(output, withItemAt: stagedOutput)
+        } else {
+            try fileManager.moveItem(at: stagedOutput, to: output)
+        }
     }
 }

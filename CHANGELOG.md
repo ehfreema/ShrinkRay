@@ -16,7 +16,10 @@ until that release is published.
 - MIT license.
 - Architecture, contribution, security, and conduct policies.
 - Detailed documentation for setup, conversion behavior, limitations, privacy, and troubleshooting.
+- Automated tests for bitrate planning, retry bounds, output installation, and a synthetic end-to-end conversion.
 
 ### Changed
 
 - Standardized the application marketing version as `1.0.0`.
+- Replaced the twelve-attempt compression loop with one conservative two-pass encode and at most one measured corrective retry.
+- Staged completed output beside the destination so an existing conversion remains intact until its replacement succeeds.
