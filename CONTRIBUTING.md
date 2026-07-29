@@ -45,8 +45,6 @@ Confirm successful outputs are playable, no larger than 7,900,000 bytes, named c
 
 By participating, you agree to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-After the GitHub repository is published:
-
 1. Search existing issues before opening a new one.
 2. Use an issue to discuss significant features, behavior changes, or architectural work before implementation.
 3. Create a focused branch and pull request.
@@ -54,8 +52,6 @@ After the GitHub repository is published:
 5. Include README, architecture, and changelog updates with behavior changes.
 
 Small fixes may go directly to a focused pull request. Do not report vulnerabilities or sensitive conduct incidents in public issues; follow [SECURITY.md](SECURITY.md) and the [Code of Conduct](CODE_OF_CONDUCT.md).
-
-Before the repository is published, coordinate proposed changes directly with Ethan Freeman through the private channel used to receive the project.
 
 ## Versioning and changelog
 

@@ -6,11 +6,9 @@ Until the first public release, security fixes are made only on the current deve
 
 ## Reporting a vulnerability
 
-This project will use GitHub private vulnerability reporting after the repository is published. Do not open a public issue for a suspected vulnerability or include exploit details in a public discussion.
+Use [GitHub private vulnerability reporting](https://github.com/ehfreema/VidToDiscord/security/advisories/new). Do not open a public issue for a suspected vulnerability or include exploit details in a public discussion.
 
-Once the repository exists, its owner must enable **Settings → Advanced Security → Private vulnerability reporting**. Reporters can then use **Security → Advisories → Report a vulnerability** in the repository.
-
-There is no private reporting channel before publication. If you receive the project directly before then, contact Ethan Freeman through the same private channel used to provide it.
+From the repository, select **Security → Advisories → Report a vulnerability** to start a private report visible to the repository maintainers.
 
 Include a clear description, affected version or commit, reproduction steps, impact, and any suggested mitigation. Allow reasonable time for investigation and a fix before public disclosure.
 

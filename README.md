@@ -173,10 +173,10 @@ There is currently no automated test target.
 
 ## Releases
 
-Public releases will use [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html), and notable changes are recorded in [`CHANGELOG.md`](CHANGELOG.md). Local builds currently carry the planned first-release marketing version `1.0.0`; no public `1.0.0` release has been published yet.
+Releases use [Semantic Versioning 2.0.0](https://semver.org/spec/v2.0.0.html), and notable changes are recorded in [`CHANGELOG.md`](CHANGELOG.md). Local builds currently carry the planned first-release marketing version `1.0.0`; no `1.0.0` release has been published yet.
 
 ## License
 
 Copyright 2026 Ethan Freeman. Licensed under the [MIT License](LICENSE).
 
-See [`SECURITY.md`](SECURITY.md) for vulnerability reporting. GitHub private vulnerability reporting will become the designated channel after this project is uploaded and that feature is enabled.
+See [`SECURITY.md`](SECURITY.md) to report vulnerabilities privately through GitHub.

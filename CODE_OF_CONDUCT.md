@@ -58,13 +58,10 @@ representative at an online or offline event.
 
 ## Enforcement
 
-After the GitHub repository is published, instances of abusive, harassing, or
-otherwise unacceptable behavior may be reported privately to Ethan Freeman
-through the contact method published on the maintainer's GitHub profile. Before
-publication, recipients of the project may report an incident through the same
-private channel by which Ethan Freeman provided the project. No reporting route
-is available to people who do not already have such a channel. All complaints
-will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be
+reported privately to Ethan Freeman through the contact method published on the
+[maintainer's GitHub profile](https://github.com/ehfreema). All complaints will
+be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
 reporter of any incident.
