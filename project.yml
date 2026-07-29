@@ -16,10 +16,14 @@ targets:
     platform: macOS
     sources:
       - VidToDiscord
+      - path: AppIcon.icon
+        type: file
+        buildPhase: resources
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.local.VidToDiscord
         PRODUCT_MODULE_NAME: Vid_to_Discord
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         CODE_SIGN_STYLE: Automatic
         ENABLE_APP_SANDBOX: NO
         INFOPLIST_KEY_CFBundleDisplayName: "Vid to Discord"

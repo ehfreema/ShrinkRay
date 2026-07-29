@@ -7,6 +7,7 @@ Vid to Discord is a small SwiftUI macOS application with a single conversion ser
 - `VidToDiscord/VidToDiscordApp.swift` creates the SwiftUI window.
 - `VidToDiscord/ContentView.swift` contains the view and the main-actor `AppModel`. The model owns file selection, status, errors, and the current input and output URLs.
 - `VidToDiscord/VideoConverter.swift` contains tool discovery, intermediate export, probing, encoding policy, process execution, output sizing, and padding.
+- `AppIcon.icon` contains the layered Icon Composer source compiled into the application icon by Xcode 26 or later.
 - `project.yml` is the XcodeGen source of truth. `VidToDiscord.xcodeproj` is generated and checked in for convenience.
 
 ## Conversion flow

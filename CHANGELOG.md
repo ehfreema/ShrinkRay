@@ -17,6 +17,7 @@ until that release is published.
 - Architecture, contribution, security, and conduct policies.
 - Detailed documentation for setup, conversion behavior, limitations, privacy, and troubleshooting.
 - Automated tests for bitrate planning, retry bounds, output installation, and a synthetic end-to-end conversion.
+- Icon Composer artwork for the macOS application icon.
 
 ### Changed
 

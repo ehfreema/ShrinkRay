@@ -2,7 +2,7 @@
 
 ## Setup
 
-1. Install Xcode 16 or later, Homebrew, FFmpeg, and FFprobe as described in the README.
+1. Install Xcode 26 or later, Homebrew, FFmpeg, and FFprobe as described in the README.
 2. Open `VidToDiscord.xcodeproj`, or build from the project root with the documented `xcodebuild` command.
 3. If project settings or target structure change, edit `project.yml` and regenerate the project with XcodeGen. Do not treat manual changes to the generated `.xcodeproj` as the source of truth.
 

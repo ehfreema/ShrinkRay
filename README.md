@@ -7,7 +7,7 @@ Conversion happens locally. The app does not upload the source or output video.
 ## Requirements
 
 - macOS 15.0 or later
-- Xcode 16 or later with the Swift 6 toolchain to build the app
+- Xcode 26 or later with Icon Composer app-icon support and the Swift 6 toolchain to build the app
 - [Homebrew](https://brew.sh/) and FFmpeg at runtime
 
 Install FFmpeg and FFprobe with:

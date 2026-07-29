@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B538AA6D00D9C309F7CB0C0 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = B2AA669C6DB8D77A0532DFCE /* AppIcon.icon */; };
 		69CC0E84AEAFB4F57EA64C37 /* VideoConverterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55DB7CDA1BF5EFC2A22AEF26 /* VideoConverterTests.swift */; };
 		A10629566C439D02B5EDDCF6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A0203CF5C0D349C9DDF5780 /* ContentView.swift */; };
 		C21DC4BAE4CF811CDAEA45D7 /* VideoConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA92CB0F3483F4658D771ECC /* VideoConverter.swift */; };
@@ -30,6 +31,7 @@
 		684A46D14CE01BEF7DAC041C /* VidToDiscord.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VidToDiscord.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CFA42F69565BDEB81B43AF1 /* VidToDiscordApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VidToDiscordApp.swift; sourceTree = "<group>"; };
 		AA92CB0F3483F4658D771ECC /* VideoConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoConverter.swift; sourceTree = "<group>"; };
+		B2AA669C6DB8D77A0532DFCE /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = wrapper.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -54,6 +56,7 @@
 		6FCFE254AC2F816BDA09435C = {
 			isa = PBXGroup;
 			children = (
+				B2AA669C6DB8D77A0532DFCE /* AppIcon.icon */,
 				461C5B3704643F372DBAE021 /* VidToDiscord */,
 				0B94D4C2651F4DDAB5B55EF3 /* VidToDiscordTests */,
 				A2F966469495598D222BD28E /* Products */,
@@ -95,6 +98,7 @@
 			buildConfigurationList = 9B2D3CE0639CB6ECB4A3B964 /* Build configuration list for PBXNativeTarget "VidToDiscord" */;
 			buildPhases = (
 				A905A08243BA9D156C2705A1 /* Sources */,
+				8FE2B8373151601EFA130AD1 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -140,6 +144,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		8FE2B8373151601EFA130AD1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B538AA6D00D9C309F7CB0C0 /* AppIcon.icon in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A905A08243BA9D156C2705A1 /* Sources */ = {
