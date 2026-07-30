@@ -35,7 +35,7 @@ final class AppModel {
         status = "Ready to make a Discord-friendly MP4"
     }
 
-    func convert() {
+    func convert(priority: QualityPriority) {
         guard let inputURL, !isConverting else { return }
         isConverting = true
         outputURL = nil
@@ -43,7 +43,7 @@ final class AppModel {
 
         Task {
             do {
-                let output = try await VideoConverter.convert(input: inputURL) { message in
+                let output = try await VideoConverter.convert(input: inputURL, priority: priority) { message in
                     Task { @MainActor in self.status = message }
                 }
                 outputURL = output
@@ -60,6 +60,18 @@ final class AppModel {
 struct ContentView: View {
     @State private var model = AppModel()
     @State private var isDropTargeted = false
+    @AppStorage("qualityPriority") private var qualityPriorityRawValue = QualityPriority.balanced.rawValue
+
+    private var qualityPriority: QualityPriority {
+        QualityPriority(rawValue: qualityPriorityRawValue) ?? .balanced
+    }
+
+    private var qualityPriorityBinding: Binding<Double> {
+        Binding(
+            get: { Double(qualityPriority.rawValue) },
+            set: { qualityPriorityRawValue = Int($0.rounded()) }
+        )
+    }
 
     var body: some View {
         VStack(spacing: 20) {
@@ -85,6 +97,32 @@ struct ContentView: View {
                     .background(.quaternary, in: RoundedRectangle(cornerRadius: 10))
             }
 
+            VStack(spacing: 7) {
+                HStack {
+                    Text("Quality Priority")
+                    Spacer()
+                    Text(qualityPriority.label)
+                        .foregroundStyle(.secondary)
+                }
+                .font(.callout)
+
+                Slider(value: qualityPriorityBinding, in: 0...2, step: 1)
+                    .accessibilityLabel("Quality priority")
+                    .accessibilityValue(qualityPriority.label)
+
+                HStack {
+                    Text("Frame Rate")
+                    Spacer()
+                    Text("Balanced")
+                    Spacer()
+                    Text("Resolution")
+                }
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            }
+            .frame(maxWidth: 330)
+            .disabled(model.isConverting)
+
             if model.isConverting {
                 ProgressView()
                     .controlSize(.small)
@@ -105,7 +143,7 @@ struct ContentView: View {
 
                 if model.outputURL == nil {
                     Button("Convert") {
-                        model.convert()
+                        model.convert(priority: qualityPriority)
                     }
                     .buttonStyle(.borderedProminent)
                     .disabled(model.inputURL == nil || model.isConverting)

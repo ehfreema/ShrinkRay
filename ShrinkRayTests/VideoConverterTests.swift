@@ -30,11 +30,63 @@ struct VideoConverterTests {
     }
 
     @Test func encodingPlanIsChosenBeforeEncoding() {
-        let plan = VideoConverter.encodingPlan(totalBitrate: 450_000, hasAudio: true)
+        let plan = VideoConverter.encodingPlan(
+            totalBitrate: 450_000,
+            hasAudio: true,
+            sourceFrameRate: 60
+        )
         #expect(plan.audioBitrate == 96_000)
         #expect(plan.videoBitrate == 354_000)
         #expect(plan.maxDimension == 640)
         #expect(plan.maxFrameRate == "30")
+    }
+
+    @Test func priorityTradesFrameRateForResolutionAtTheSameBitrate() {
+        let frameRate = VideoConverter.encodingPlan(
+            totalBitrate: 450_000,
+            hasAudio: true,
+            priority: .frameRate,
+            sourceFrameRate: 120
+        )
+        let balanced = VideoConverter.encodingPlan(
+            totalBitrate: 450_000,
+            hasAudio: true,
+            priority: .balanced,
+            sourceFrameRate: 120
+        )
+        let resolution = VideoConverter.encodingPlan(
+            totalBitrate: 450_000,
+            hasAudio: true,
+            priority: .resolution,
+            sourceFrameRate: 120
+        )
+
+        #expect(frameRate.maxDimension == 480)
+        #expect(frameRate.maxFrameRate == "60")
+        #expect(balanced.maxDimension == 640)
+        #expect(balanced.maxFrameRate == "30")
+        #expect(resolution.maxDimension == 960)
+        #expect(resolution.maxFrameRate == "15")
+        #expect(frameRate.videoBitrate == balanced.videoBitrate)
+        #expect(balanced.videoBitrate == resolution.videoBitrate)
+        #expect(frameRate.audioBitrate == balanced.audioBitrate)
+        #expect(balanced.audioBitrate == resolution.audioBitrate)
+    }
+
+    @Test func frameRateCapNeverUpsamplesTheSource() {
+        let plan = VideoConverter.encodingPlan(
+            totalBitrate: 450_000,
+            hasAudio: true,
+            priority: .frameRate,
+            sourceFrameRate: 24
+        )
+        #expect(plan.maxFrameRate == nil)
+    }
+
+    @Test func parsesFFprobeFrameRates() {
+        #expect(VideoConverter.parsedFrameRate("30000/1001") == 30000.0 / 1001.0)
+        #expect(VideoConverter.parsedFrameRate("24") == 24)
+        #expect(VideoConverter.parsedFrameRate("0/0") == nil)
     }
 
     @Test func installingNewOutputMovesStagedFile() throws {
@@ -89,7 +141,7 @@ struct VideoConverterTests {
         process.executableURL = URL(fileURLWithPath: ffmpegPath)
         process.arguments = [
             "-y", "-hide_banner", "-loglevel", "error",
-            "-f", "lavfi", "-i", "testsrc2=duration=1:size=320x240:rate=30",
+            "-f", "lavfi", "-i", "testsrc2=duration=1:size=320x240:rate=60",
             "-f", "lavfi", "-i", "sine=frequency=1000:duration=1",
             "-c:v", "libx264", "-pix_fmt", "yuv420p",
             "-c:a", "aac", "-shortest", input.path
@@ -98,7 +150,7 @@ struct VideoConverterTests {
         process.waitUntilExit()
         #expect(process.terminationStatus == 0)
 
-        let output = try await VideoConverter.convert(input: input) { _ in }
+        let output = try await VideoConverter.convert(input: input, priority: .resolution) { _ in }
         let size = try output.resourceValues(forKeys: [.fileSizeKey]).fileSize
         #expect(size == 7_850_000)
         let files = try FileManager.default.contentsOfDirectory(atPath: directory.path)

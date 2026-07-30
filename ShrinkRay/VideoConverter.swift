@@ -1,6 +1,20 @@
 import AVFoundation
 import Foundation
 
+enum QualityPriority: Int, CaseIterable, Sendable {
+    case frameRate
+    case balanced
+    case resolution
+
+    var label: String {
+        switch self {
+        case .frameRate: "Frame Rate"
+        case .balanced: "Balanced"
+        case .resolution: "Resolution"
+        }
+    }
+}
+
 enum ConversionError: LocalizedError {
     case ffmpegMissing
     case invalidVideo
@@ -37,8 +51,20 @@ enum VideoConverter {
         let maxFrameRate: String?
     }
 
+    private struct VideoInfo {
+        let duration: Double
+        let hasAudio: Bool
+        let frameRate: Double?
+    }
+
+    private struct QualityProfile {
+        let maxDimension: Int
+        let maxFrameRate: String?
+    }
+
     static func convert(
         input: URL,
+        priority: QualityPriority = .balanced,
         status: @escaping @Sendable (String) -> Void
     ) async throws -> URL {
         let ffmpeg = try executable(named: "ffmpeg")
@@ -70,7 +96,9 @@ enum VideoConverter {
         for attempt in 1...maxEncodingAttempts {
             let plan = encodingPlan(
                 totalBitrate: totalBitrate,
-                hasAudio: info.hasAudio
+                hasAudio: info.hasAudio,
+                priority: priority,
+                sourceFrameRate: info.frameRate
             )
             let passlog = temporaryDirectory.appending(path: "pass-\(attempt)").path
             status(attempt == 1 ? "Encoding for Discord..." : "Fine-tuning the file size...")
@@ -136,10 +164,15 @@ enum VideoConverter {
         return URL(fileURLWithPath: path)
     }
 
-    private static func probe(ffprobe: URL, input: URL) throws -> (duration: Double, hasAudio: Bool) {
+    private static func probe(ffprobe: URL, input: URL) throws -> VideoInfo {
         let output = try run(
             ffprobe,
-            ["-v", "error", "-show_entries", "format=duration", "-show_entries", "stream=codec_type", "-of", "json", input.path],
+            [
+                "-v", "error",
+                "-show_entries", "format=duration:stream=codec_type,avg_frame_rate,r_frame_rate",
+                "-of", "json",
+                input.path
+            ],
             captureOutput: true
         )
         guard let data = output.data(using: .utf8),
@@ -150,7 +183,14 @@ enum VideoConverter {
             throw ConversionError.invalidVideo
         }
         let streams = json["streams"] as? [[String: Any]] ?? []
-        return (duration, streams.contains { $0["codec_type"] as? String == "audio" })
+        let videoStream = streams.first { $0["codec_type"] as? String == "video" }
+        let frameRate = parsedFrameRate(videoStream?["avg_frame_rate"] as? String)
+            ?? parsedFrameRate(videoStream?["r_frame_rate"] as? String)
+        return VideoInfo(
+            duration: duration,
+            hasAudio: streams.contains { $0["codec_type"] as? String == "audio" },
+            frameRate: frameRate
+        )
     }
 
     private static func encode(
@@ -185,7 +225,12 @@ enum VideoConverter {
         try run(ffmpeg, secondPass)
     }
 
-    static func encodingPlan(totalBitrate: Int, hasAudio: Bool) -> EncodingPlan {
+    static func encodingPlan(
+        totalBitrate: Int,
+        hasAudio: Bool,
+        priority: QualityPriority = .balanced,
+        sourceFrameRate: Double? = nil
+    ) -> EncodingPlan {
         let audioBitrate: Int
         if !hasAudio || totalBitrate < 48_000 {
             audioBitrate = 0
@@ -200,28 +245,93 @@ enum VideoConverter {
         }
 
         let videoBitrate = max(1_000, totalBitrate - audioBitrate)
-        var quality: (dimension: Int, frameRate: String?)
+        let tier: Int
         switch videoBitrate {
-        case 1_600_000...: quality = (1920, nil)
-        case 800_000...: quality = (1280, nil)
-        case 400_000...: quality = (960, "30")
-        case 200_000...: quality = (640, "30")
-        case 100_000...: quality = (480, "24")
-        case 50_000...: quality = (360, "15")
-        case 25_000...: quality = (256, "10")
-        case 10_000...: quality = (192, "5")
-        case 4_000...: quality = (128, "2")
-        case 1_000...: quality = (96, "1")
-        default: quality = (64, "1/5")
+        case 1_600_000...: tier = 10
+        case 800_000...: tier = 9
+        case 400_000...: tier = 8
+        case 200_000...: tier = 7
+        case 100_000...: tier = 6
+        case 50_000...: tier = 5
+        case 25_000...: tier = 4
+        case 10_000...: tier = 3
+        case 4_000...: tier = 2
+        case 1_000...: tier = 1
+        default: tier = 0
         }
+        let quality = qualityProfile(tier: tier, priority: priority)
+        let maxFrameRate = effectiveFrameRate(
+            maximum: quality.maxFrameRate,
+            sourceFrameRate: sourceFrameRate
+        )
 
         return EncodingPlan(
             totalBitrate: totalBitrate,
             videoBitrate: videoBitrate,
             audioBitrate: audioBitrate,
-            maxDimension: quality.dimension,
-            maxFrameRate: quality.frameRate
+            maxDimension: quality.maxDimension,
+            maxFrameRate: maxFrameRate
         )
+    }
+
+    private static func qualityProfile(tier: Int, priority: QualityPriority) -> QualityProfile {
+        let balanced = [
+            QualityProfile(maxDimension: 64, maxFrameRate: "1/5"),
+            QualityProfile(maxDimension: 96, maxFrameRate: "1"),
+            QualityProfile(maxDimension: 128, maxFrameRate: "2"),
+            QualityProfile(maxDimension: 192, maxFrameRate: "5"),
+            QualityProfile(maxDimension: 256, maxFrameRate: "10"),
+            QualityProfile(maxDimension: 360, maxFrameRate: "15"),
+            QualityProfile(maxDimension: 480, maxFrameRate: "24"),
+            QualityProfile(maxDimension: 640, maxFrameRate: "30"),
+            QualityProfile(maxDimension: 960, maxFrameRate: "30"),
+            QualityProfile(maxDimension: 1280, maxFrameRate: nil),
+            QualityProfile(maxDimension: 1920, maxFrameRate: nil)
+        ]
+        let safeTier = min(max(tier, 0), balanced.count - 1)
+
+        switch priority {
+        case .balanced:
+            return balanced[safeTier]
+        case .frameRate:
+            let frameRateCaps: [String?] = ["1", "2", "5", "10", "20", "30", "60", "60", nil, nil, nil]
+            return QualityProfile(
+                maxDimension: balanced[max(0, safeTier - 1)].maxDimension,
+                maxFrameRate: frameRateCaps[safeTier]
+            )
+        case .resolution:
+            let frameRateCaps: [String?] = ["1/5", "1/2", "1", "2", "5", "10", "12", "15", "15", "30", "30"]
+            return QualityProfile(
+                maxDimension: balanced[min(balanced.count - 1, safeTier + 1)].maxDimension,
+                maxFrameRate: frameRateCaps[safeTier]
+            )
+        }
+    }
+
+    private static func effectiveFrameRate(maximum: String?, sourceFrameRate: Double?) -> String? {
+        guard let maximum,
+              let maximumValue = parsedFrameRate(maximum),
+              let sourceFrameRate,
+              sourceFrameRate > maximumValue + 0.01 else {
+            return nil
+        }
+        return maximum
+    }
+
+    static func parsedFrameRate(_ value: String?) -> Double? {
+        guard let value, !value.isEmpty else { return nil }
+        let components = value.split(separator: "/", omittingEmptySubsequences: false)
+        let frameRate: Double?
+        if components.count == 2,
+           let numerator = Double(components[0]),
+           let denominator = Double(components[1]),
+           denominator != 0 {
+            frameRate = numerator / denominator
+        } else {
+            frameRate = Double(value)
+        }
+        guard let frameRate, frameRate.isFinite, frameRate > 0 else { return nil }
+        return frameRate
     }
 
     @discardableResult

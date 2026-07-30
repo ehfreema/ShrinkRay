@@ -4,6 +4,10 @@
   <img src="docs/AppIcon.png" width="192" alt="ShrinkRay app icon">
 </p>
 
+<p align="center">
+  <img src="docs/AppScreenshot.png" width="430" alt="ShrinkRay app showing the quality priority slider">
+</p>
+
 ShrinkRay is a native macOS app that converts one local video at a time into a Discord-sized MP4. Processing stays on your Mac; nothing is uploaded.
 
 ## Requirements
@@ -59,8 +63,9 @@ xcodegen generate
 ## Usage
 
 1. Choose a video or drag one onto the window.
-2. Click **Convert**.
-3. Click **Show in Finder** when it finishes.
+2. Set **Quality Priority** to favor frame rate, use the balanced default, or favor resolution.
+3. Click **Convert**.
+4. Click **Show in Finder** when it finishes.
 
 The picker accepts movie types recognized by macOS; dropped files are checked by extension. Actual format support depends on AVFoundation and the installed FFmpeg build.
 
@@ -74,7 +79,7 @@ Conversion uses a slow two-pass encode and shows stages rather than percentage p
 - Written beside the source
 - Maximum accepted size: **7.9 MB**
 
-ShrinkRay targets **7.7 MB** to leave room for container overhead. If the first result is too large, it makes at most one measured retry at a lower bitrate. Resolution, frame rate, and audio quality are selected from the available bitrate; very long videos may become extremely low quality and lose audio.
+ShrinkRay targets **7.7 MB** to leave room for container overhead. If the first result is too large, it makes at most one measured retry at a lower bitrate. Resolution and frame rate are selected from the available bitrate and quality-priority setting; audio quality depends on the available bitrate. Very long videos may become extremely low quality and lose audio.
 
 Outputs below **7.8 MB** are normally padded to **7.85 MB** with an MP4 `free` atom. Padding adds no media or quality.
 
