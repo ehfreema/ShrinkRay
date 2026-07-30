@@ -5,7 +5,11 @@
 </p>
 
 <p align="center">
-  <img src="docs/AppScreenshot.png" width="430" alt="ShrinkRay app showing the quality priority slider">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/AppScreenshotDark.png">
+    <source media="(prefers-color-scheme: light)" srcset="docs/AppScreenshot.png">
+    <img src="docs/AppScreenshot.png" width="430" alt="ShrinkRay app showing the quality priority slider">
+  </picture>
 </p>
 
 ShrinkRay is a native macOS app that converts one local video at a time into a Discord-sized MP4. Processing stays on your Mac; nothing is uploaded.
