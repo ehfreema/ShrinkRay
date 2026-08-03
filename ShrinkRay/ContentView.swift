@@ -78,6 +78,13 @@ struct ContentView: View {
             Image(systemName: model.outputURL == nil ? "arrow.down.doc" : "checkmark.circle.fill")
                 .font(.system(size: 42, weight: .light))
                 .foregroundStyle(model.outputURL == nil ? Color.accentColor : .green)
+                .overlay(alignment: .trailing) {
+                    if model.isConverting {
+                        ProgressView()
+                            .controlSize(.small)
+                            .offset(x: 28)
+                    }
+                }
 
             VStack(spacing: 6) {
                 Text("ShrinkRay")
@@ -122,11 +129,6 @@ struct ContentView: View {
             }
             .frame(maxWidth: 330)
             .disabled(model.isConverting)
-
-            if model.isConverting {
-                ProgressView()
-                    .controlSize(.small)
-            }
 
             if let errorMessage = model.errorMessage {
                 Text(errorMessage)
