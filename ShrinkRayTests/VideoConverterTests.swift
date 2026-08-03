@@ -169,4 +169,56 @@ struct VideoConverterTests {
         let files = try FileManager.default.contentsOfDirectory(atPath: directory.path)
         #expect(!files.contains { $0.hasSuffix(".part.mp4") })
     }
+
+    @Test func convertsSyntheticHDRToBT709WhenBT2390IsAvailable() async throws {
+        let ffmpeg = URL(fileURLWithPath: "/opt/homebrew/opt/ffmpeg-full/bin/ffmpeg")
+        let ffprobe = URL(fileURLWithPath: "/opt/homebrew/opt/ffmpeg-full/bin/ffprobe")
+        guard FileManager.default.isExecutableFile(atPath: ffmpeg.path),
+              FileManager.default.isExecutableFile(atPath: ffprobe.path),
+              VideoConverter.supportsBT2390(ffmpeg: ffmpeg) else {
+            return
+        }
+
+        let directory = FileManager.default.temporaryDirectory
+            .appending(path: "ShrinkRayHDRTests-\(UUID().uuidString)", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+
+        let input = directory.appending(path: "synthetic-hdr.mp4")
+        let generator = Process()
+        generator.executableURL = ffmpeg
+        generator.arguments = [
+            "-y", "-hide_banner", "-loglevel", "error",
+            "-f", "lavfi", "-i", "testsrc2=duration=1:size=64x64:rate=24",
+            "-vf", "format=yuv420p10le", "-c:v", "libx265", "-preset", "ultrafast",
+            "-x265-params", "colorprim=bt2020:transfer=smpte2084:colormatrix=bt2020nc",
+            "-tag:v", "hvc1", "-an", input.path
+        ]
+        try generator.run()
+        generator.waitUntilExit()
+        #expect(generator.terminationStatus == 0)
+
+        let output = try await VideoConverter.convert(input: input, priority: .balanced) { _ in }
+        let probe = Process()
+        let pipe = Pipe()
+        probe.executableURL = ffprobe
+        probe.arguments = [
+            "-v", "error",
+            "-show_entries", "stream=pix_fmt,color_primaries,color_transfer,color_space,color_range",
+            "-of", "json", output.path
+        ]
+        probe.standardOutput = pipe
+        try probe.run()
+        probe.waitUntilExit()
+        let metadata = String(
+            data: pipe.fileHandleForReading.readDataToEndOfFile(),
+            encoding: .utf8
+        ) ?? ""
+
+        #expect(probe.terminationStatus == 0)
+        #expect(metadata.contains("\"pix_fmt\": \"yuv420p\""))
+        #expect(metadata.contains("\"color_space\": \"bt709\""))
+        #expect(metadata.contains("\"color_transfer\": \"bt709\""))
+        #expect(metadata.contains("\"color_primaries\": \"bt709\""))
+    }
 }

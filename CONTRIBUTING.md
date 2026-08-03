@@ -31,7 +31,7 @@ Manually test at least:
 - a source around 60 minutes or longer to exercise the minimum-bitrate profile;
 - missing FFmpeg or FFprobe;
 - an FFmpeg build without `libx264`, if practical;
-- SDR, PQ, and HLG sources, including the clear capability error when `libplacebo` is unavailable;
+- SDR, PQ, and HLG sources, including the clear capability error when `libplacebo` or MoltenVK is unavailable;
 - an FFmpeg failure that exits nonzero, confirming that command failures are not retried;
 - invalid, unsupported, and protected inputs;
 - preservation and successful replacement of an existing output;

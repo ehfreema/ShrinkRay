@@ -19,7 +19,7 @@ until that release is published.
 - Automated tests for bitrate planning, retry bounds, output installation, and a synthetic end-to-end conversion.
 - Icon Composer artwork for the macOS application icon.
 - A persisted quality-priority control for favoring frame rate, balanced output, or resolution.
-- ITU-R BT.2390 tone mapping for PQ and HLG sources through `libplacebo`.
+- ITU-R BT.2390 tone mapping for PQ and HLG sources through `libplacebo` and MoltenVK.
 
 ### Changed
 

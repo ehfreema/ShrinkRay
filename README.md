@@ -23,10 +23,10 @@ ShrinkRay is a native macOS app that converts one local video at a time into a D
 Install the full runtime to support standards-based HDR conversion:
 
 ```sh
-brew install ffmpeg-full
+brew install ffmpeg-full molten-vk
 ```
 
-The regular `brew install ffmpeg` build works for SDR sources, but it does not include `libplacebo`; PQ and HLG sources therefore require `ffmpeg-full` for BT.2390 tone mapping. FFmpeg must include the `libx264` and AAC encoders. ShrinkRay does not search `$PATH` or support custom tool locations. It checks, in order:
+The regular `brew install ffmpeg` build works for SDR sources, but it does not include `libplacebo`; PQ and HLG sources therefore require `ffmpeg-full` plus the MoltenVK driver for BT.2390 tone mapping on macOS. FFmpeg must include the `libx264` and AAC encoders. ShrinkRay does not search `$PATH` or support custom tool locations. It checks, in order:
 
 1. `/opt/homebrew/opt/ffmpeg-full/bin`
 2. `/usr/local/opt/ffmpeg-full/bin`
@@ -102,7 +102,7 @@ ShrinkRay is not sandboxed. FFmpeg and FFprobe run with your filesystem permissi
 
 - **FFmpeg not found:** Ensure both `ffmpeg` and `ffprobe` exist in one of the supported paths above. A command working through `$PATH` is not enough.
 - **Unknown encoder:** Install an FFmpeg build with `libx264` and AAC support.
-- **BT.2390 unavailable:** Install `ffmpeg-full`; the regular Homebrew FFmpeg build cannot tone-map PQ or HLG sources with BT.2390.
+- **BT.2390 unavailable:** Run `brew install ffmpeg-full molten-vk`; the regular Homebrew FFmpeg build cannot tone-map PQ or HLG sources with BT.2390, and libplacebo requires MoltenVK on macOS.
 - **Duration could not be read:** Check that FFprobe can inspect the file and that the media is not DRM-protected.
 - **Dropped file rejected:** Use **Choose Video** or give the file a recognized movie extension.
 - **Conversion appears stuck:** Two-pass encoding can take longer than the source and has no percentage progress or cancellation.

@@ -32,7 +32,7 @@ enum ConversionError: LocalizedError {
         case .outputTooLarge:
             "FFmpeg could not produce a valid Discord-sized video."
         case .bt2390Unavailable:
-            "HDR conversion requires FFmpeg with libplacebo and BT.2390 support. Install it with: brew install ffmpeg-full"
+            "HDR conversion requires FFmpeg with libplacebo and a Vulkan driver. Install them with: brew install ffmpeg-full molten-vk"
         }
     }
 }
@@ -348,7 +348,7 @@ enum VideoConverter {
 
     static let bt2390Filter = "libplacebo=colorspace=bt709:color_primaries=bt709:color_trc=bt709:range=tv:tonemapping=bt.2390:tonemapping_param=0.5"
 
-    private static func supportsBT2390(ffmpeg: URL) -> Bool {
+    static func supportsBT2390(ffmpeg: URL) -> Bool {
         do {
             try run(
                 ffmpeg,

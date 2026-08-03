@@ -16,7 +16,7 @@ ShrinkRay is a small SwiftUI macOS application with a single conversion service.
 2. `AppModel` starts an asynchronous conversion and displays stage messages from `VideoConverter`.
 3. `VideoConverter` locates `ffmpeg` and `ffprobe` in the fixed, ordered Homebrew search paths listed in the README. Existing `ffmpeg-full` paths take precedence over standard Homebrew binary paths.
 4. FFprobe reads the source duration, audio presence, frame rate, and transfer characteristics. PQ (`smpte2084`) and HLG (`arib-std-b67`) are treated as HDR.
-5. HDR conversion is accepted only when the selected FFmpeg can execute `libplacebo` with the ITU-R BT.2390 EETF. The filter converts HDR directly to limited-range BT.709 and uses the standard `0.5` knee offset. SDR sources bypass tone mapping.
+5. HDR conversion is accepted only when the selected FFmpeg can execute `libplacebo` with the ITU-R BT.2390 EETF. Homebrew `ffmpeg-full` supplies the filter and MoltenVK supplies its macOS Vulkan driver. The filter converts HDR directly to limited-range BT.709 and uses the standard `0.5` knee offset. SDR sources bypass tone mapping.
 6. The converter estimates a total bitrate for a conservative 7,700,000-byte encoding target. Audio, resolution, and frame rate are selected from that budget and the quality-priority setting before encoding.
 7. FFmpeg performs two-pass H.264 encoding directly from the source to a unique hidden staging MP4 beside the destination. The first pass writes media to `/dev/null`; the second writes the staged file. Each attempt has a separate pass-log prefix.
 8. If the result exceeds 7,900,000 bytes, the converter scales the measured bitrate toward the safe target with an additional safety factor and performs one final two-pass retry.
