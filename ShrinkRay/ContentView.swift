@@ -78,13 +78,6 @@ struct ContentView: View {
             Image(systemName: model.outputURL == nil ? "arrow.down.doc" : "checkmark.circle.fill")
                 .font(.system(size: 42, weight: .light))
                 .foregroundStyle(model.outputURL == nil ? Color.accentColor : .green)
-                .overlay(alignment: .trailing) {
-                    if model.isConverting {
-                        ProgressView()
-                            .controlSize(.small)
-                            .offset(x: 28)
-                    }
-                }
 
             VStack(spacing: 6) {
                 Text("ShrinkRay")
@@ -113,9 +106,19 @@ struct ContentView: View {
                 }
                 .font(.callout)
 
-                Slider(value: qualityPriorityBinding, in: 0...2, step: 1)
-                    .accessibilityLabel("Quality priority")
-                    .accessibilityValue(qualityPriority.label)
+                ZStack {
+                    Slider(value: qualityPriorityBinding, in: 0...2, step: 1)
+                        .accessibilityLabel("Quality priority")
+                        .accessibilityValue(qualityPriority.label)
+                        .opacity(model.isConverting ? 0 : 1)
+
+                    if model.isConverting {
+                        ProgressView()
+                            .progressViewStyle(.linear)
+                            .accessibilityLabel("Conversion in progress")
+                    }
+                }
+                .frame(height: 20)
 
                 HStack {
                     Text("Frame Rate")

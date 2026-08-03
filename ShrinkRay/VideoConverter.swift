@@ -1,4 +1,3 @@
-import AVFoundation
 import Foundation
 
 enum QualityPriority: Int, CaseIterable, Sendable {
@@ -20,6 +19,7 @@ enum ConversionError: LocalizedError {
     case invalidVideo
     case commandFailed(String)
     case outputTooLarge
+    case bt2390Unavailable
 
     var errorDescription: String? {
         switch self {
@@ -31,6 +31,8 @@ enum ConversionError: LocalizedError {
             message.isEmpty ? "FFmpeg could not convert this video." : message
         case .outputTooLarge:
             "FFmpeg could not produce a valid Discord-sized video."
+        case .bt2390Unavailable:
+            "HDR conversion requires FFmpeg with libplacebo and BT.2390 support. Install it with: brew install ffmpeg-full"
         }
     }
 }
@@ -55,6 +57,7 @@ enum VideoConverter {
         let duration: Double
         let hasAudio: Bool
         let frameRate: Double?
+        let isHDR: Bool
     }
 
     private struct QualityProfile {
@@ -81,12 +84,14 @@ enum VideoConverter {
         try FileManager.default.createDirectory(at: temporaryDirectory, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: temporaryDirectory) }
 
-        let sdrInput = temporaryDirectory.appending(path: "tone-mapped.mp4")
-        status("Tone mapping to SDR...")
-        try await toneMap(input: input, output: sdrInput)
-
         status("Reading video details...")
-        let info = try probe(ffprobe: ffprobe, input: sdrInput)
+        let info = try probe(ffprobe: ffprobe, input: input)
+        if info.isHDR {
+            status("Checking BT.2390 tone mapping...")
+            guard supportsBT2390(ffmpeg: ffmpeg) else {
+                throw ConversionError.bt2390Unavailable
+            }
+        }
         // Aim below the hard limit so the first two-pass encode normally fits.
         // The reserve covers muxing and rate-control variance; one measured
         // correction is available for unusual files.
@@ -101,14 +106,19 @@ enum VideoConverter {
                 sourceFrameRate: info.frameRate
             )
             let passlog = temporaryDirectory.appending(path: "pass-\(attempt)").path
-            status(attempt == 1 ? "Encoding for Discord..." : "Fine-tuning the file size...")
+            if attempt == 1 {
+                status(info.isHDR ? "Tone mapping HDR with BT.2390..." : "Encoding for Discord...")
+            } else {
+                status("Fine-tuning the file size...")
+            }
             try? FileManager.default.removeItem(at: stagedOutput)
             try encode(
                 ffmpeg: ffmpeg,
-                input: sdrInput,
+                input: input,
                 output: stagedOutput,
                 passlog: passlog,
-                plan: plan
+                plan: plan,
+                toneMapHDR: info.isHDR
             )
             size = try stagedOutput.resourceValues(forKeys: [.fileSizeKey]).fileSize.map(Int64.init) ?? 0
             guard size >= minimumOutputBytes else {
@@ -143,14 +153,6 @@ enum VideoConverter {
         return max(1_000, min(current - 1, corrected))
     }
 
-    private static func toneMap(input: URL, output: URL) async throws {
-        let asset = AVURLAsset(url: input)
-        guard let session = AVAssetExportSession(asset: asset, presetName: AVAssetExportPresetHighestQuality) else {
-            throw ConversionError.invalidVideo
-        }
-        try await session.export(to: output, as: .mp4)
-    }
-
     private static func executable(named name: String) throws -> URL {
         let candidates = [
             "/opt/homebrew/opt/ffmpeg-full/bin/\(name)",
@@ -169,7 +171,7 @@ enum VideoConverter {
             ffprobe,
             [
                 "-v", "error",
-                "-show_entries", "format=duration:stream=codec_type,avg_frame_rate,r_frame_rate",
+                "-show_entries", "format=duration:stream=codec_type,avg_frame_rate,r_frame_rate,color_transfer",
                 "-of", "json",
                 input.path
             ],
@@ -186,10 +188,12 @@ enum VideoConverter {
         let videoStream = streams.first { $0["codec_type"] as? String == "video" }
         let frameRate = parsedFrameRate(videoStream?["avg_frame_rate"] as? String)
             ?? parsedFrameRate(videoStream?["r_frame_rate"] as? String)
+        let colorTransfer = videoStream?["color_transfer"] as? String
         return VideoInfo(
             duration: duration,
             hasAudio: streams.contains { $0["codec_type"] as? String == "audio" },
-            frameRate: frameRate
+            frameRate: frameRate,
+            isHDR: isHDRTransfer(colorTransfer)
         )
     }
 
@@ -198,9 +202,13 @@ enum VideoConverter {
         input: URL,
         output: URL,
         passlog: String,
-        plan: EncodingPlan
+        plan: EncodingPlan,
+        toneMapHDR: Bool
     ) throws {
         var filters: [String] = []
+        if toneMapHDR {
+            filters.append(bt2390Filter)
+        }
         if let maxFrameRate = plan.maxFrameRate {
             filters.append("fps=\(maxFrameRate)")
         }
@@ -332,6 +340,29 @@ enum VideoConverter {
         }
         guard let frameRate, frameRate.isFinite, frameRate > 0 else { return nil }
         return frameRate
+    }
+
+    static func isHDRTransfer(_ value: String?) -> Bool {
+        value == "smpte2084" || value == "arib-std-b67"
+    }
+
+    static let bt2390Filter = "libplacebo=colorspace=bt709:color_primaries=bt709:color_trc=bt709:range=tv:tonemapping=bt.2390:tonemapping_param=0.5"
+
+    private static func supportsBT2390(ffmpeg: URL) -> Bool {
+        do {
+            try run(
+                ffmpeg,
+                [
+                    "-hide_banner", "-loglevel", "error",
+                    "-f", "lavfi", "-i", "color=c=black:s=16x16:d=0.04",
+                    "-vf", bt2390Filter,
+                    "-frames:v", "1", "-f", "null", "-"
+                ]
+            )
+            return true
+        } catch {
+            return false
+        }
     }
 
     @discardableResult

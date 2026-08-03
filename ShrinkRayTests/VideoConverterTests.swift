@@ -89,6 +89,19 @@ struct VideoConverterTests {
         #expect(VideoConverter.parsedFrameRate("0/0") == nil)
     }
 
+    @Test func detectsPQAndHLGAsHDR() {
+        #expect(VideoConverter.isHDRTransfer("smpte2084"))
+        #expect(VideoConverter.isHDRTransfer("arib-std-b67"))
+        #expect(!VideoConverter.isHDRTransfer("bt709"))
+        #expect(!VideoConverter.isHDRTransfer(nil))
+    }
+
+    @Test func usesTheBT2390StandardCurve() {
+        #expect(VideoConverter.bt2390Filter.contains("tonemapping=bt.2390"))
+        #expect(VideoConverter.bt2390Filter.contains("tonemapping_param=0.5"))
+        #expect(VideoConverter.bt2390Filter.contains("color_trc=bt709"))
+    }
+
     @Test func installingNewOutputMovesStagedFile() throws {
         let directory = FileManager.default.temporaryDirectory
             .appending(path: "ShrinkRayTests-\(UUID().uuidString)", directoryHint: .isDirectory)

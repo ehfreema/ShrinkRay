@@ -18,6 +18,8 @@ until that release is published.
 - Detailed documentation for setup, conversion behavior, limitations, privacy, and troubleshooting.
 - Automated tests for bitrate planning, retry bounds, output installation, and a synthetic end-to-end conversion.
 - Icon Composer artwork for the macOS application icon.
+- A persisted quality-priority control for favoring frame rate, balanced output, or resolution.
+- ITU-R BT.2390 tone mapping for PQ and HLG sources through `libplacebo`.
 
 ### Changed
 
@@ -26,3 +28,5 @@ until that release is published.
 - Streamlined the README while preserving setup, usage, output, privacy, and troubleshooting requirements.
 - Replaced the twelve-attempt compression loop with one conservative two-pass encode and at most one measured corrective retry.
 - Staged completed output beside the destination so an existing conversion remains intact until its replacement succeeds.
+- Reused the quality slider track as a stable linear activity indicator during conversion.
+- Removed the lossy AVFoundation intermediate export; FFmpeg now encodes directly from the source.

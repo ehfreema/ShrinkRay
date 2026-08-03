@@ -20,13 +20,13 @@ ShrinkRay is a native macOS app that converts one local video at a time into a D
 - Xcode 26 or later with Swift 6 and Icon Composer support
 - [Homebrew](https://brew.sh/), FFmpeg, and FFprobe
 
-Install the runtime tools with:
+Install the full runtime to support standards-based HDR conversion:
 
 ```sh
-brew install ffmpeg
+brew install ffmpeg-full
 ```
 
-FFmpeg must include the `libx264` and AAC encoders. ShrinkRay does not search `$PATH` or support custom tool locations. It checks, in order:
+The regular `brew install ffmpeg` build works for SDR sources, but it does not include `libplacebo`; PQ and HLG sources therefore require `ffmpeg-full` for BT.2390 tone mapping. FFmpeg must include the `libx264` and AAC encoders. ShrinkRay does not search `$PATH` or support custom tool locations. It checks, in order:
 
 1. `/opt/homebrew/opt/ffmpeg-full/bin`
 2. `/usr/local/opt/ffmpeg-full/bin`
@@ -71,14 +71,15 @@ xcodegen generate
 3. Click **Convert**.
 4. Click **Show in Finder** when it finishes.
 
-The picker accepts movie types recognized by macOS; dropped files are checked by extension. Actual format support depends on AVFoundation and the installed FFmpeg build.
+The picker accepts movie types recognized by macOS; dropped files are checked by extension. Actual format support depends on the installed FFmpeg build.
 
-Conversion uses a slow two-pass encode and shows stages rather than percentage progress. There is no cancellation, batch conversion, configurable output folder, configurable size target, or custom FFmpeg path.
+Conversion uses a slow two-pass encode. During conversion, the quality slider becomes an indeterminate linear progress bar while the status text shows the current stage. There is no percentage progress, cancellation, batch conversion, configurable output folder, configurable size target, or custom FFmpeg path.
 
 ## Output
 
 - MP4 with H.264 video and, when bitrate allows, stereo AAC audio
 - `yuv420p`, BT.709 color metadata, and fast-start playback
+- PQ and HLG sources tone-mapped to BT.709 with the ITU-R BT.2390 EETF when `ffmpeg-full` is available
 - Named `<source-name>-discord.mp4`
 - Written beside the source
 - Maximum accepted size: **7.9 MB**
@@ -93,9 +94,7 @@ ShrinkRay encodes to a hidden staging file and preserves an existing `-discord.m
 
 ## Privacy and temporary files
 
-AVFoundation first creates a complete intermediate MP4 in macOS temporary storage. Long or high-resolution inputs may require gigabytes of free space. This export is potentially lossy, and the displayed **Tone mapping to SDR** stage does not guarantee correct HDR conversion.
-
-Temporary media and logs are removed after normal completion or failure. A crash, force-quit, power loss, or interrupted conversion may leave files in macOS temporary storage or a hidden `.part.mp4` beside the source. The app does not cancel a running FFmpeg process automatically.
+Temporary pass logs are removed after normal completion or failure. A crash, force-quit, power loss, or interrupted conversion may leave files in macOS temporary storage or a hidden `.part.mp4` beside the source. The app does not cancel a running FFmpeg process automatically.
 
 ShrinkRay is not sandboxed. FFmpeg and FFprobe run with your filesystem permissions, and the source directory must be writable. Use trusted binaries and input files.
 
@@ -103,7 +102,8 @@ ShrinkRay is not sandboxed. FFmpeg and FFprobe run with your filesystem permissi
 
 - **FFmpeg not found:** Ensure both `ffmpeg` and `ffprobe` exist in one of the supported paths above. A command working through `$PATH` is not enough.
 - **Unknown encoder:** Install an FFmpeg build with `libx264` and AAC support.
-- **Duration could not be read:** Check that macOS can export the file, FFprobe can inspect it, the media is not DRM-protected, and the temporary volume has free space.
+- **BT.2390 unavailable:** Install `ffmpeg-full`; the regular Homebrew FFmpeg build cannot tone-map PQ or HLG sources with BT.2390.
+- **Duration could not be read:** Check that FFprobe can inspect the file and that the media is not DRM-protected.
 - **Dropped file rejected:** Use **Choose Video** or give the file a recognized movie extension.
 - **Conversion appears stuck:** Two-pass encoding can take longer than the source and has no percentage progress or cancellation.
 - **No output:** Look beside the source for a file ending in `-discord.mp4`.

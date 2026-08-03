@@ -31,13 +31,14 @@ Manually test at least:
 - a source around 60 minutes or longer to exercise the minimum-bitrate profile;
 - missing FFmpeg or FFprobe;
 - an FFmpeg build without `libx264`, if practical;
+- SDR, PQ, and HLG sources, including the clear capability error when `libplacebo` is unavailable;
 - an FFmpeg failure that exits nonzero, confirming that command failures are not retried;
 - invalid, unsupported, and protected inputs;
 - preservation and successful replacement of an existing output;
 - a source in a read-only directory;
 - low free space on the macOS temporary volume;
 - output-size and very-low-quality fallback behavior; and
-- interruption during intermediate export and FFmpeg encoding.
+- interruption during FFmpeg encoding.
 
 Confirm successful outputs are playable, no larger than 7,900,000 bytes, named correctly, and written beside the source. Check the macOS temporary directory when testing cleanup and interruption behavior. Interruption currently means terminating the app; afterward, check Activity Monitor for an FFmpeg process that is still running and terminate it manually if necessary.
 
